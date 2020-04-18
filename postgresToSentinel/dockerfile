@@ -1,0 +1,16 @@
+# escape=`
+
+# LogStash base image from Elastic version 7.6.2
+FROM docker.elastic.co/logstash/logstash:7.6.2
+
+# Delete logstash.conf in custom image, so that we won't retain the example config from the base image.
+RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+
+# Copy JDBC drivers for PostgreSQL connection
+ADD postgresql-42.2.12.jar /usr/share/logstash/modules/postgres/postgresql-42.2.12.jar
+
+# Install LogStash output plug-in Azure Log Analyics Workspace connection for Azure Sentinel
+RUN /usr/share/logstash/bin/logstash-plugin install logstash-output-azure_loganalytics
+
+# Copy pipeline config file
+ADD postgres-to-sentinel.conf /usr/share/logstash/pipeline/postgres-to-sentinel.conf
