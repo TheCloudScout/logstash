@@ -41,6 +41,10 @@ PostgreSQL creates the user with the settings you specified.
 
 	CREATE TABLE authentication (uid serial,timestamp TIMESTAMP,event VARCHAR(80) NOT NULL,message VARCHAR(80) NOT NULL,username VARCHAR(80) NOT NULL,ipaddress VARCHAR(80) NOT NULL);
 
+### quit psql
+
+	\q
+
 ## Grant database user on database
 
     GRANT permissions ON DATABASE security TO <username>;
