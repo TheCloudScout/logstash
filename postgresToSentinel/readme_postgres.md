@@ -51,6 +51,10 @@ PostgreSQL creates the user with the settings you specified.
 
 ## Insert some data
 
+	psql
+	
+	\c security
+	
 	INSERT INTO authentication(timestamp, event, message, username, ipaddress) VALUES('2020-04-16 19:26:25', '1010', 'User succesfully logged in', 'koos', '178.85.181.163');
 	INSERT INTO authentication(timestamp, event, message, username, ipaddress) VALUES('2020-04-16 19:26:25', '9050', 'User changed password', 'koos', '178.85.181.163');
 	INSERT INTO authentication(timestamp, event, message, username, ipaddress) VALUES('2020-04-16 19:25:57', '9000', 'Password expired, needs to be changed', 'koos', '178.85.181.163');
