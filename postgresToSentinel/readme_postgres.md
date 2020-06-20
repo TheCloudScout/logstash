@@ -48,6 +48,7 @@ PostgreSQL creates the user with the settings you specified.
 ## Grant database user on database
 
     GRANT all privileges ON DATABASE security to <username>;
+    GRANT all privileges ON TABLE authentication to <username>;
 
 ## Insert some data
 
