@@ -6,8 +6,8 @@
 
 ## Create database user
 
-    su - postgres
-
+    sudo su
+    su postgres
     createuser --interactive --pwprompt
 
 At the Enter name of role to add: prompt, type the <username>.
