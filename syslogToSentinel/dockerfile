@@ -1,0 +1,13 @@
+# escape=`
+
+# LogStash base image from Elastic version 7.6.2
+FROM docker.elastic.co/logstash/logstash:7.9.1
+
+# Delete logstash.conf in custom image, so that we won't retain the example config from the base image.
+RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+
+# Install LogStash output plug-in Azure Log Analyics Workspace connection for Azure Sentinel
+RUN /usr/share/logstash/bin/logstash-plugin install logstash-output-azure_loganalytics
+
+# Copy pipeline config file
+ADD syslog-to-sentinel.conf /usr/share/logstash/pipeline/syslog-to-sentinel.conf
