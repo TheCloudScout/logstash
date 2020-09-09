@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash-syslogtosentinel
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: logstash-syslogtosentinel
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: logstash-syslogtosentinel
+    spec:
+      containers:
+      - image: logstashdemo.azurecr.io/logstash/syslog-to-sentinel_0.2
+        name: logstashdemo
+        ports:
+        - containerPort: 12345
+          protocol: TCP
+        env:
+        - name: WORKSPACEID
+          value: "2cfabee8-4b6d-4e41-9926-4b46c2e6785a"
+        - name: WORKSPACEKEY
+          value: "7y2BvGrUiS6trnDntnaGDSbGI906R4V6o8XJ1lvO059/Wp+e7xlcvLFcodz+igXAGxhJG2Glch16/2Ryd8vi+g=="
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syslog-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 12345
+    protocol: TCP
+  selector:
+    app: logstash-syslogtosentinel
