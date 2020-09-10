@@ -1,32 +1,19 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: logstash-syslogtosentinel
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: logstash-syslogtosentinel
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5 
   template:
     metadata:
       labels:
         app: logstash-syslogtosentinel
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - logstash-syslogtosentinel
-            topologyKey: "kubernetes.io/hostname"
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
       containers:
       - image: logstashdemo.azurecr.io/logstash/syslog-to-sentinel_0.2
         name: logstashdemo
